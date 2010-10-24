@@ -24,12 +24,30 @@ function NodeCli () {
 	  cyan:    36,
 	  white:   37
 	};
+	this.bgcolors = {
+	  red:     41,
+	  green:   42,
+	  yellow:  43,
+	  blue:    44,
+	  magenta: 45,
+	  cyan:    46,
+	  white:   47,
+	};
 
 	/**
 	 * Echo color code, bold is optional
 	 */
-	this.color = function(color, bold) {
-		sys.print('\x1B['+(bold ? 1 : 0)+';'+this.colors[color]+'m');
+	this.color = function(color, bold, background) {
+		bg = (background && this.bgcolors[background]) ? ';'+this.bgcolors[background] : '';
+		sys.print('\x1B['+(bold ? 1 : 0)+';'+this.colors[color]+bg+'m');
+		return(this);
+	};
+
+	/**
+	 * Echo color code, bold is optional
+	 */
+	this.bgcolor = function(color) {
+		sys.print('\x1B[0;m39');
 		return(this);
 	};
 
@@ -37,7 +55,15 @@ function NodeCli () {
 	 * Reset terminal to default color
 	 */
 	this.resetColor = function() {
-		sys.print('\x1B[0m');
+		sys.print('\x1B[0;0m');
+		return(this);
+	};
+
+	/**
+	 * Reset terminal to default color
+	 */
+	this.resetBg = function() {
+		sys.print('\x1B[49m49m');
 		return(this);
 	};
 	
@@ -115,3 +141,5 @@ function NodeCli () {
 }
 
 cli = new NodeCli();
+
+cli.clear().move(38, 5).write('Node.js').down(1).back(7).write('Rocks!');
