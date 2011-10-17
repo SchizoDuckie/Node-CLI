@@ -3,13 +3,13 @@
  * By SchizoDuckie
  *
  * Super simple CLI cursor position control to spice up your script's functionality in terminal/console windows
- * Requires sys
+ * Requires util
  * v1.0
  *
  * Free to use and modify, enjoy!
  */
 
-var sys = require("sys");
+var util = require("util");
 
 
 function NodeCli () {
@@ -39,7 +39,7 @@ function NodeCli () {
 	 */
 	this.color = function(color, bold, background) {
 		bg = (background && this.bgcolors[background]) ? ';'+this.bgcolors[background] : '';
-		sys.print('\x1B['+(bold ? 1 : 0)+';'+this.colors[color]+bg+'m');
+		this.write('\x1B['+(bold ? 1 : 0)+';'+this.colors[color]+bg+'m');
 		return(this);
 	};
 
@@ -47,7 +47,7 @@ function NodeCli () {
 	 * Echo color code, bold is optional
 	 */
 	this.bgcolor = function(color) {
-		sys.print('\x1B[0;m39');
+		this.write('\x1B[0;m39');
 		return(this);
 	};
 
@@ -55,7 +55,7 @@ function NodeCli () {
 	 * Reset terminal to default color
 	 */
 	this.resetColor = function() {
-		sys.print('\x1B[0;0m');
+		this.write('\x1B[0;0m');
 		return(this);
 	};
 
@@ -63,7 +63,7 @@ function NodeCli () {
 	 * Reset terminal to default color
 	 */
 	this.resetBg = function() {
-		sys.print('\x1B[49m49m');
+		this.write('\x1B[49m49m');
 		return(this);
 	};
 	
@@ -71,7 +71,15 @@ function NodeCli () {
 	 * Output string @ current x/y
 	 */
 	this.write = function(string) {
-		sys.print(string);
+		util.print(string);
+		return(this);
+	};
+
+	/**
+	 * Output string at new line
+	 */
+	this.print = function(string) {
+		util.puts(string);
 		return(this);
 	};
 	
@@ -79,7 +87,7 @@ function NodeCli () {
 	 * Position the Cursor to x/y
 	 */
 	this.move = function(x,y) {
-		sys.print('\033['+x+';'+y+'H');
+		this.write('\033['+x+';'+y+'H');
 		return this;
 	};
 	
@@ -87,7 +95,7 @@ function NodeCli () {
 	 * Move the cursor up x rows
 	 */
 	this.up = function(x) {
-		sys.print('\033['+x+'A');
+		this.write('\033['+x+'A');
 		return this;
 	};
 
@@ -95,7 +103,7 @@ function NodeCli () {
 	 * Move the cursor down x rows
 	 */
 	this.down = function(x) {
-		sys.print('\033['+x+'B');
+		this.write('\033['+x+'B');
 		return this;
 	};
 
@@ -103,7 +111,7 @@ function NodeCli () {
 	 * Move the cursor forward x rows
 	 */
 	this.fwd = function(x) {
-		sys.print('\033['+x+'C');
+		this.write('\033['+x+'C');
 		return this;
 	};
 
@@ -111,7 +119,7 @@ function NodeCli () {
 	 * Move the cursor backwards x columns
 	 */
 	this.back = function(x) {
-		sys.print('\033['+x+'D');
+		this.write('\033['+x+'D');
 		return this;
 	};
 
@@ -119,7 +127,7 @@ function NodeCli () {
 	 * Clear the entire screen
 	 */
 	this.clear = function(x) {
-		sys.print('\033[2J');
+		this.write('\033[2J');
 		return this;
 	};
 
@@ -127,7 +135,7 @@ function NodeCli () {
 	 * Clear the current line
 	 */
 	this.clearLine = function(x) {
-		sys.print('\033[K');
+		this.write('\033[K');
 		return this;
 	};
 
@@ -142,4 +150,5 @@ function NodeCli () {
 
 cli = new NodeCli();
 
-cli.clear().move(38, 5).write('Node.js').down(1).back(7).write('Rocks!');
+//cli.clear().move(38, 5).write('Node.js').down(1).back(7).write('Rocks!');
+cli.clear().move(20,20).color('red').write('Node.js').down(1).back(7).color('yellow').write('Rocks!').down(10);
