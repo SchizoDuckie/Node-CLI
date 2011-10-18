@@ -8,6 +8,8 @@
  * Requires util only
  * v2.0
  *
+ * ANSI escape codes are used. For details see: http://en.wikipedia.org/wiki/ANSI_escape_code
+ *
  * Free to use and modify, enjoy!
  */
 
@@ -16,6 +18,7 @@ var util = require("util");
 
 function NodeCli () {
 
+	this.bold = true;
 	this.colors = {
 	  grey:    30,
 	  red:     31,
@@ -27,6 +30,7 @@ function NodeCli () {
 	  white:   37
 	};
 	this.bgcolors = {
+	  gray:    40,
 	  red:     41,
 	  green:   42,
 	  yellow:  43,
@@ -35,38 +39,75 @@ function NodeCli () {
 	  cyan:    46,
 	  white:   47,
 	};
+	this.textstyles = {
+	  bold:       1,
+	  underscore: 4,
+	  blink:      5,
+	  inverse:    7,
+	  conceal:    8,
+	  nobold:     22,
+	  nounderline:24,
+	  noblink:    25,
+	  noinverse:  27,
+	  noconceal:  28,
+	  frame:      51,
+	  encircle:   52,
+	  overline:   53,
+	  no_frame_or_circle:54,
+	  nooverline: 55
+	}
 
 	/**
-	 * Set colors
+	 * Set colors and styles
+	 * future: color, bold(boolean), background or: color, background, others
 	 */
 	this.color = function(color, bold, background) {
 		bg = (background && this.bgcolors[background]) ? ';'+this.bgcolors[background] : '';
+		//if(typeof bold == 'boolean')
 		this.write('\x1B['+(bold ? 1 : 0)+';'+this.colors[color]+bg+'m');
 		return(this);
 	};
 
 	/**
-	 * Set background color only
+	 * Set bckground color only
 	 */
 	this.bgcolor = function(color) {
-		this.write('\x1B[' + this.bgcolors[color] + 'm');
-		return(this);
+		return this.write('\x1B[' + this.bgcolors[color] + 'm');
 	};
 
 	/**
-	 * Reset terminal to default color
+	 * Set text styles only
+	 */
+	this.style = function(style) {
+		return this.write('\x1B[' + this.textstyles[style] + 'm');
+	};
+
+	/**
+	 * Reset terminal to default attributes (colors, styles)
+	 */
+	this.resetColors = function() {
+		return this.write('\x1B[0m');
+	};
+
+	/**
+	 * Reset terminal to default text color
 	 */
 	this.resetColor = function() {
-		this.write('\x1B[0;0m');
-		return(this);
+		return this.write('\x1B[39m');
 	};
 
 	/**
-	 * Reset terminal to default color
+	 * Reset terminal to default background color
 	 */
 	this.resetBg = function() {
-		this.write('\x1B[49m49m');
-		return(this);
+		return this.write('\x1B[49m');
+	};
+
+	/**
+	 * Reset terminal to all default text styles
+	 */
+	this.resetStyle = function() {
+		return this.write('\x1B[10;22;23;24;25;27;28;29;54;55m');
 	};
 	
 	/**
@@ -89,56 +130,49 @@ function NodeCli () {
 	 * Position the Cursor to x/y
 	 */
 	this.move = function(x,y) {
-		this.write('\033['+x+';'+y+'H');
-		return this;
+		return this.write('\x1B['+x+';'+y+'H');
 	};
 	
 	/**
 	 * Move the cursor up x rows
 	 */
 	this.up = function(x) {
-		this.write('\033['+x+'A');
-		return this;
+		return this.write('\x1B['+x+'A');
 	};
 
 	/**
 	 * Move the cursor down x rows
 	 */
 	this.down = function(x) {
-		this.write('\033['+x+'B');
-		return this;
+		return this.write('\x1B['+x+'B');
 	};
 
 	/**
 	 * Move the cursor forward x rows
 	 */
 	this.fwd = function(x) {
-		this.write('\033['+x+'C');
-		return this;
+		return this.write('\x1B['+x+'C');
 	};
 
 	/**
 	 * Move the cursor backwards x columns
 	 */
 	this.back = function(x) {
-		this.write('\033['+x+'D');
-		return this;
+		return this.write('\x1B['+x+'D');
 	};
 
 	/**
 	 * Clear the entire screen
 	 */
 	this.clear = function(x) {
-		this.write('\033[2J');
-		return this;
+		return this.write('\x1B['+(x ? x : 2)+'J');
 	};
 
 	/**
 	 * Clear the current line
 	 */
 	this.clearLine = function(x) {
-		this.write('\033[K');
-		return this;
+		return this.write('\x1B['+(x ? x : 2)+'K');
 	};
 
 	/** 
@@ -150,7 +184,7 @@ function NodeCli () {
 	
 }
 
-cli = new NodeCli();
+module.exports = new NodeCli();
 
 //cli.clear().move(38, 5).write('Node.js').down(1).back(7).write('Rocks!');
-cli.clear().move(20,20).color('red').write('Node.js').down(1).back(7).color('yellow').write('Rocks!').down(10);
+module.exports.clear().move(20,20).color('red').write('Node.js').down(1).back(7).color('yellow').write('Rocks!').down(10);
