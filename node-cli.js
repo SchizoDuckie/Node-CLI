@@ -37,7 +37,7 @@ function NodeCli () {
 	};
 
 	/**
-	 * Echo color code, bold is optional
+	 * Set colors
 	 */
 	this.color = function(color, bold, background) {
 		bg = (background && this.bgcolors[background]) ? ';'+this.bgcolors[background] : '';
@@ -46,10 +46,10 @@ function NodeCli () {
 	};
 
 	/**
-	 * Echo color code, bold is optional
+	 * Set background color only
 	 */
 	this.bgcolor = function(color) {
-		this.write('\x1B[0;' + this.bgcolors[color] + 'm');
+		this.write('\x1B[' + this.bgcolors[color] + 'm');
 		return(this);
 	};
 
