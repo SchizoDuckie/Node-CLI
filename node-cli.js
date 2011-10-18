@@ -49,7 +49,7 @@ function NodeCli () {
 	 * Echo color code, bold is optional
 	 */
 	this.bgcolor = function(color) {
-		this.write('\x1B[0;m39');
+		this.write('\x1B[0;' + this.bgcolors[color] + 'm');
 		return(this);
 	};
 
