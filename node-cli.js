@@ -61,7 +61,7 @@ function NodeCli () {
 	//Set colors and styles
 	//Syntax: color, bold(boolean), background or: color, background, others...
 	this.color = function(color, bold, background) {
-		var output = '\x1B[' + this.colors[color];
+		var output = this.colors[color];
 		if(typeof bold == 'boolean') {
 			output += (bold ? ';1' : '') + (background? ';'+this.bgcolors[background] : '');
 		}
@@ -71,17 +71,17 @@ function NodeCli () {
 				output += ';' + (typeof arguments[i] == 'string' ? this.textstyles[arguments[i]] : arguments[i] + ';');
 			}
 		}
-		return this.write(output + 'm');
+		return this.custom(output + 'm');
 	};
 
 	//Set bckground color only
 	this.bgcolor = function(color) {
-		return this.write('\x1B[' + this.bgcolors[color] + 'm');
+		return this.custom(this.bgcolors[color] + 'm');
 	};
 
 	//Set text styles only
 	this.style = function(style) {
-		return this.write('\x1B[' + this.textstyles[style] + 'm');
+		return this.custom(this.textstyles[style] + 'm');
 	};
 
 	//Reset terminal to default attributes (colors, styles)
@@ -118,37 +118,37 @@ function NodeCli () {
 	
 	//Position the Cursor to x/y
 	this.move = function(x,y) {
-		return this.write('\x1B['+x+';'+y+'H');
+		return this.custom(x+';'+y+'H');
 	};
 	
 	//Move the cursor up x rows
 	this.up = function(x) {
-		return this.write('\x1B['+x+'A');
+		return this.custom(x+'A');
 	};
 
 	//Move the cursor down x rows
 	this.down = function(x) {
-		return this.write('\x1B['+x+'B');
+		return this.custom(x+'B');
 	};
 
 	//Move the cursor forward x rows
 	this.fwd = function(x) {
-		return this.write('\x1B['+x+'C');
+		return this.custom(x+'C');
 	};
 
 	//Move the cursor backwards x columns
 	this.back = function(x) {
-		return this.write('\x1B['+x+'D');
+		return this.custom(x+'D');
 	};
 
 	//Clear the entire screen
 	this.clear = function(x) {
-		return this.write('\x1B['+(x ? x : 2)+'J');
+		return this.custom((x ? x : 2)+'J');
 	};
 
 	//Clear the current line
 	this.clearLine = function(x) {
-		return this.write('\x1B['+(x ? x : 2)+'K');
+		return this.custom((x ? x : 2)+'K');
 	};
 
 	//Clear the next x chars, keep cursor positioned where it started
