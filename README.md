@@ -2,14 +2,18 @@ Node.CLI
 =========
 
 By SchizoDuckie
+
 Updated By xkxx
 Super simple CLI cursor position control to spice up your script's functionality in terminal/console windows
+
 Updated for 0.4.*
+
 Requires util
+
 v2.0
 
 Free to use and modify.
-Reporting issues is appreciated.
+Report any issues you encountered. 
 
 Node.cli uses ANSI control codes to control console behavior. For details see: <http://en.wikipedia.org/wiki/ANSI_escape_code>
 
@@ -45,7 +49,7 @@ Example:
 ```javascript
 cli.print('We are');
 cli.print('In different lines');
-```javascript
+```
 
 ### cli.color(text_color, [bold(boolean or cli.bold), [background_color]])
 ### cli.color(text_color, [[background_color, [text_styles...]])
@@ -60,7 +64,7 @@ Example:
 cli.color('yellow', cli.bold).write('Here is some yellow text.');
 ```
 
-If you are not satisfied with the provided styles, it's possible to pass SGR codes directly as . For example:
+If you are not satisfied with the provided text styles, it's possible to pass SGR codes directly. For example:
 
 ```javascript
 cli.color('green', 'default', 'bold', 4, 7); //same as cli.color('green', 'default', 'bold', 'underscore', 'inverse');
