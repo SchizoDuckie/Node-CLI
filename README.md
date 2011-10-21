@@ -56,6 +56,7 @@ cli.print('In different lines');
 Set colors and styles
 
 Choices of Text and background colors: 'default', 'gray', 'red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white'.
+
 Choices of Text styles: 'bold', 'underscore', 'blink', 'inverse', 'conceal', 'nobold', 'nounderscore', 'noblink', 'noinverse', 'noconceal', 'frame', 'encircle', 'overline', 'no_frame_or_circle', 'nooverline'.
 
 Example:
