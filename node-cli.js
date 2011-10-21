@@ -74,7 +74,7 @@ function NodeCli () {
 		return this.custom(output + 'm');
 	};
 
-	//Set bckground color only
+	//Set background color only
 	this.bgcolor = function(color) {
 		return this.custom(this.bgcolors[color] + 'm');
 	};
@@ -85,7 +85,7 @@ function NodeCli () {
 	};
 
 	//Reset terminal to default attributes (colors, styles)
-	this.resetColors = function() {
+	this.reset = function() {
 		return this.write('\x1B[0m');
 	};
 
@@ -164,6 +164,9 @@ function NodeCli () {
 }
 
 module.exports = new NodeCli();
+
+//Reset console when program exits
+process.on('exit', module.exports.reset);
 
 //cli.clear().move(38, 5).write('Node.js').down(1).back(7).write('Rocks!');
 module.exports.clear().move(20,20).color('red', true).write('Node.js').down(1).back(7).color('yellow', 'default', 'underscore').write('Rocks!').resetStyle().down(10);
