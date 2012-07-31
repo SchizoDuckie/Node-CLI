@@ -8,8 +8,6 @@ Super simple CLI cursor position control to spice up your script's functionality
 
 Updated for 0.4.*
 
-Requires util
-
 v2.0
 
 Free to use and modify.
