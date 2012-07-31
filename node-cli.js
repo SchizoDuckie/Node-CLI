@@ -1,19 +1,16 @@
 /**
  * Node.CLI
- * By SchizoDuckie
- * Updated By xkxx
+ * Original Author: SchizoDuckie
+ * Updated by: Cory Gross, xkxx      
  * 
- * Super simple CLI cursor position control to spice up your script's functionality in terminal/console windows
- * Updated for 0.4.*
- * Requires util only
- * v2.0
+ * Super simple CLI for enhanced control over cursor position and color customization
+ * to spice up your script's functionality and appearance in terminal/console windows.
+ * Requires no dependencies. Instead utilizes Node.JS 'process' object to access stdout.
  *
  * ANSI escape codes are used. For details see: http://en.wikipedia.org/wiki/ANSI_escape_code
  *
  * Free to use and modify, enjoy!
  */
-
-var util = require("util");
 
 function NodeCli () {
 
@@ -106,13 +103,13 @@ function NodeCli () {
 	
 	//Output string @ current x/y
 	this.write = function(string) {
-		util.print(string);
+		process.stdout.print(string);
 		return(this);
 	};
 
 	//Output string at new line
 	this.print = function(string) {
-		util.puts(string);
+		process.stdout.puts(string);
 		return(this);
 	};
 	
