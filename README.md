@@ -3,7 +3,7 @@ Node.CLI
 
 By SchizoDuckie
 
-Updated By xkxx
+Updated By Cory Gross, xkxx
 Super simple CLI cursor position control to spice up your script's functionality in terminal/console windows
 
 Updated for 0.4.*
